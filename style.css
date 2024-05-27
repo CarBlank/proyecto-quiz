@@ -1,3 +1,9 @@
 .hide {
 	display: none !important;
 }
+.color-correct {
+	background-color: greenyellow;
+}
+.color-wrong {
+	background-color: red;
+}

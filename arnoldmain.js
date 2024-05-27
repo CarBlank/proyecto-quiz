@@ -27,23 +27,79 @@ function showquestions(item) {
 	questions.innerText = item.question
 
 	let array = []
-	array.push(item.correct_answer)
+
+	//añadir la respuesta correcta de la API con una propiedad "Correct" para identificarla
+	const truearray = {
+		correct: `${item.correct_answer}`,
+	}
+	array.push(truearray)
+
+	//añadir las respuestas incorrectas de la API con una propiedad "incorrect" para identificarlas (Vienen las 3 juntas por lo que hay que separar con foreach)
 	item.incorrect_answers.forEach((element) => {
-		array.push(element)
+		let falsearray = {
+			incorrect: `${element}`,
+		}
+
+		array.push(falsearray)
 	})
-	array.forEach((awnser) => {
+
+	//creamos funcion para desordenar el array
+	array.sort(function () {
+		return Math.random() - 0.5
+	})
+
+	//recorrremos el array para crear un boton por cada uno, con sus respectivas clases de estilos y le agregamos el atributo "Dataset: true"
+	//a la respuesta que hemos identificado como "correct"
+	array.forEach((arr) => {
 		const button = document.createElement("button")
 		button.setAttribute("class", "btn btn-primary")
-		button.innerHTML = awnser
+		button.innerHTML = arr.correct || arr.incorrect
+		if (arr.correct) {
+			button.dataset.correct = true
+		}
+		button.addEventListener("click", selectresp)
 		answers.appendChild(button)
 	})
 }
 
 function setNextQuestion() {
+	reset()
 	setTimeout(() => {
 		questionslist = questionslist[0]
 		showquestions(questionslist[currentQuestionIndex])
-	}, 30)
+	}, 300)
+}
+
+function setstatus(element) {
+	if (element.dataset.correct) {
+		element.classList.add("color-correct")
+	} else {
+		element.classList.add("color-wrong")
+	}
+}
+
+function selectresp() {
+	Array.from(answers.children).forEach((button) => {
+		setstatus(button)
+	})
+	if (questionslist.length > currentQuestionIndex + 1) {
+		next.classList.remove("hide")
+	} else {
+		start.innerText = "Restart"
+		start.classList.remove("hide")
+	}
+}
+
+next.addEventListener("click", () => {
+	currentQuestionIndex++
+	setNextQuestion()
+})
+
+function reset() {
+	next.classList.add("hide")
+	while (answers.firstChild) {
+		answers.removeChild(answers.firstChild)
+	}
 }
 
 buttonnext.addEventListener("click", next)
