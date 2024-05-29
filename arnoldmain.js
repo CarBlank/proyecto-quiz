@@ -102,5 +102,5 @@ function reset() {
 	}
 }
 
-buttonnext.addEventListener("click", next)
+buttonnext.addEventListener("click", setNextQuestion)
 buttonstart.addEventListener("click", start)
