@@ -4,12 +4,15 @@ const questions = document.getElementById("questions")
 const answers = document.getElementById("answers")
 const buttonstart = document.getElementById("start")
 const buttonnext = document.getElementById("next")
-let questionslist = []
 let currentQuestionIndex
+let questionslist
 
 axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`)
 	.then((res) => {
-		questionslist.push(res.data.results)
+		questionslist = res.data.results
+
+		// questionslist.push(res.data.results)
+		return questionslist
 		//questionslist.results son las preguntas y respuestas en un array de lengt 10
 	})
 	.catch((err) => console.log(err))
@@ -64,10 +67,7 @@ function showquestions(item) {
 
 function setNextQuestion() {
 	reset()
-	setTimeout(() => {
-		questionslist = questionslist[0]
-		showquestions(questionslist[currentQuestionIndex])
-	}, 300)
+	showquestions(questionslist[currentQuestionIndex])
 }
 
 function setstatus(element) {
@@ -83,10 +83,10 @@ function selectresp() {
 		setstatus(button)
 	})
 	if (questionslist.length > currentQuestionIndex + 1) {
-		next.classList.remove("hide")
+		buttonnext.classList.remove("hide")
 	} else {
-		start.innerText = "Restart"
-		start.classList.remove("hide")
+		buttonstart.classList.remove("hide")
+		buttonstart.innerText = "Restart"
 	}
 }
 
@@ -96,11 +96,11 @@ next.addEventListener("click", () => {
 })
 
 function reset() {
-	next.classList.add("hide")
+	buttonnext.classList.add("hide")
 	while (answers.firstChild) {
 		answers.removeChild(answers.firstChild)
 	}
 }
 
-buttonnext.addEventListener("click", next)
+buttonnext.addEventListener("click", setNextQuestion)
 buttonstart.addEventListener("click", start)
