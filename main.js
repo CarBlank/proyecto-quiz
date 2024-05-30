@@ -4,8 +4,28 @@ const questions = document.getElementById("questions")
 const answers = document.getElementById("answers")
 const buttonstart = document.getElementById("start")
 const buttonnext = document.getElementById("next")
+const contentresults = document.getElementById("Resultados")
 let currentQuestionIndex
 let questionslist
+
+function results(key, element) {
+	let arrayResults = JSON.parse(localStorage.getItem(key)) || []
+	arrayResults.push(element)
+	localStorage.setItem("ejerciciocarlotaarnold", JSON.stringify(arrayResults))
+	console.log(arrayResults)
+
+	const datatitle = arrayResults.map((item) => item.date_hours)
+	console.log(datatitle)
+	/* let date_hours = new Date()
+	localStorage.setItem(date_hours, JSON.stringify(counter))
+	arrayResults.push(date_hours) */
+
+	/* contentresults.innerHTML += `<p>${LOCALSTORAGE}</p>` */
+}
+/* 
+arrayResults.forEach((data) => {
+	results(data)
+}) */
 
 axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`)
 	.then((res) => {
@@ -59,7 +79,9 @@ function showquestions(item) {
 		button.innerHTML = arr.correct || arr.incorrect
 		if (arr.correct) {
 			button.dataset.correct = true
+			button.addEventListener("click", savecorrectanswers)
 		}
+
 		button.addEventListener("click", selectresp)
 		answers.appendChild(button)
 	})
@@ -73,8 +95,10 @@ function setNextQuestion() {
 function setstatus(element) {
 	if (element.dataset.correct) {
 		element.classList.add("color-correct")
+		element.classList.add("disable")
 	} else {
 		element.classList.add("color-wrong")
+		element.classList.add("disable")
 	}
 }
 
@@ -85,8 +109,10 @@ function selectresp() {
 	if (questionslist.length > currentQuestionIndex + 1) {
 		buttonnext.classList.remove("hide")
 	} else {
+		// LLAMAR A FUNCION DE LOCALSTORAGE
 		buttonstart.classList.remove("hide")
 		buttonstart.innerText = "Restart"
+		return (counter = 0)
 	}
 }
 
@@ -100,6 +126,12 @@ function reset() {
 	while (answers.firstChild) {
 		answers.removeChild(answers.firstChild)
 	}
+}
+let counter = 0
+function savecorrectanswers() {
+	counter = counter + 1
+
+	return counter
 }
 
 buttonnext.addEventListener("click", setNextQuestion)

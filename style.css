@@ -1,6 +1,10 @@
 .hide {
 	display: none !important;
 }
+
+.disable {
+	pointer-events: none;
+}
 .color-correct {
 	background-color: greenyellow;
 }
