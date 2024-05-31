@@ -26,8 +26,6 @@ Lista de software y herramientas, incluyendo versiones, que necesitas para insta
 
 ## Construido Con 🛠️
 
-Explica qué tecnologías usaste para construir este proyecto. Aquí algunos ejemplos:
-
 -    [Boostrap](https://blog.getbootstrap.com/2024/02/20/bootstrap-5-3-3/) - El framework web utilizado
 -    [Apexcharts](https://apexcharts.com/docs/installation/) - Modern & Interactive Open-source Charts
 -    [Axios](https://axios-http.com/es/docs/intro) - Cliente HTTP basado en promesas
@@ -35,10 +33,6 @@ Explica qué tecnologías usaste para construir este proyecto. Aquí algunos eje
 ## Contribuyendo 🖇️
 
 Repositorio de Carlota con la contribucion de Arnold
-
-## Wiki 📖
-
-Puedes encontrar mucho más sobre cómo usar este proyecto en nuestra [Wiki](https://github.com/your/project/wiki)
 
 ## Soporte
 
