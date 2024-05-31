@@ -77,9 +77,8 @@ axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&ty
 	.then((res) => {
 		questionsList = res.data.results
 
-		// questionslist.push(res.data.results)
 		return questionsList
-		//questionslist.results son las preguntas y respuestas en un array de lengt 10
+		//questionslist.results son las preguntas y respuestas en un array de length 10
 	})
 	.catch((err) => console.log(err))
 
@@ -160,11 +159,11 @@ function selectresp() {
 	if (questionsList.length > currentQuestionIndex + 1) {
 		nextButton.classList.remove("hide")
 	} else {
-		// LLAMAR A FUNCION DE LOCALSTORAGE
 		finishButton.classList.remove("hide")
 		finishButton.addEventListener("click", resetQuiz)
 		restartButton.classList.remove("hide")
 
+		// LLAMAR A FUNCION DE LOCALSTORAGE
 		saveDataLocalstorage()
 		return (counter = 0)
 	}
