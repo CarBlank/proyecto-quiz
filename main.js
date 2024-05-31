@@ -8,6 +8,8 @@ const restartButton = document.getElementById("restart")
 const nextButton = document.getElementById("next")
 const finishButton = document.getElementById("finish")
 const contentResults = document.getElementById("results")
+const printresulth1 = document.getElementById("print")
+const chartresults = document.getElementById("chart")
 
 let currentQuestionIndex
 let questionsList
@@ -18,14 +20,37 @@ let minutos = date.getMinutes()
 let dia = date.getDay()
 let mes = date.getMonth()
 let aNos = date.getFullYear()
-let date_hours = dia + "/" + mes + "/" + aNos + " a las: " + horas + ":" + minutos
-
+let date_hours = dia + "/" + mes + "/" + aNos + " - " + horas + ":" + minutos
+let arraydata = []
+let arraydates = []
 let counter = 0
+var options = {
+	chart: {
+		type: "bar",
+	},
+	series: [
+		{
+			name: "Scores",
+			data: arraydata,
+		},
+	],
+	xaxis: {
+		categories: arraydates,
+	},
+}
 
 function seeresults() {
 	contentResults.classList.remove("hide")
 	contentResults.innerHTML = ""
+
 	let resultArray = JSON.parse(localStorage.getItem("results")) || []
+
+	resultArray.forEach((n) => {
+		arraydata.push(n.counter)
+		arraydates.push(n.date_hours)
+	})
+	chart.render()
+
 	for (let i = 0; i < resultArray.length; i++) {
 		contentResults.innerHTML += `
 			<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -34,22 +59,9 @@ function seeresults() {
 			</li>
 			`
 	}
-	var options = {
-		chart: {
-			type: "bar",
-		},
-		series: [
-			{
-				name: "sales",
-				data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
-			},
-		],
-		xaxis: {
-			categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-		},
-	}
-	var chart = new ApexCharts(document.querySelector("#chart"), options)
-	chart.render()
+	printresulth1.innerText = ``
+
+	chartresults.classList.remove("hide")
 }
 
 function resetQuiz() {
@@ -61,6 +73,7 @@ function resetQuiz() {
 	currentQuestionIndex = 0
 	questions.classList.add("hide")
 	answers.classList.add("hide")
+
 	seeresults()
 }
 
@@ -86,6 +99,7 @@ function start() {
 	startButton.classList.add("hide")
 	nextButton.classList.remove("hide")
 	finishButton.classList.add("hide")
+	chartresults.classList.add("hide")
 	/* contentResults.classList.add("hide") */
 	restartButton.classList.add("hide")
 	cardGroup.classList.add("hide")
@@ -94,6 +108,7 @@ function start() {
 	questions.classList.remove("hide")
 	answers.classList.remove("hide")
 	setNextQuestion()
+	printresulth1.innerText = ``
 }
 
 function showquestions(item) {
@@ -162,7 +177,7 @@ function selectresp() {
 		finishButton.classList.remove("hide")
 		finishButton.addEventListener("click", resetQuiz)
 		restartButton.classList.remove("hide")
-
+		printresult(counter)
 		// LLAMAR A FUNCION DE LOCALSTORAGE
 		saveDataLocalstorage()
 		return (counter = 0)
@@ -179,12 +194,18 @@ function reset() {
 	while (answers.firstChild) {
 		answers.removeChild(answers.firstChild)
 	}
+	printresulth1.innerText = ``
 }
 
 function savecorrectanswers() {
 	counter = counter + 1
 }
 
+function printresult(resultado) {
+	printresulth1.innerText = `Your score is ${resultado}/10!`
+}
+
+var chart = new ApexCharts(document.querySelector("#chart"), options)
 nextButton.addEventListener("click", setNextQuestion)
 startButton.addEventListener("click", start)
 restartButton.addEventListener("click", start)
