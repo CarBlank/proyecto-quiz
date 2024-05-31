@@ -1,3 +1,14 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+}
+
+body {
+	background-color: #363a66;
+}
+
 .hide {
 	display: none !important;
 }
@@ -10,4 +21,13 @@
 }
 .color-wrong {
 	background-color: red;
+}
+
+.navbar {
+	background-color: #181632 !important;
+}
+
+.navbar-nav a,
+.nav-link.active a {
+	color: #ffffff !important;
 }

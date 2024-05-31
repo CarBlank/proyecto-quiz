@@ -1,46 +1,97 @@
 //https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple
 const container = document.querySelector(".container")
+const cardGroup = document.getElementById("card-group")
 const questions = document.getElementById("questions")
 const answers = document.getElementById("answers")
-const buttonstart = document.getElementById("start")
-const buttonnext = document.getElementById("next")
-const contentresults = document.getElementById("Resultados")
+const startButton = document.getElementById("start")
+const restartButton = document.getElementById("restart")
+const nextButton = document.getElementById("next")
+const finishButton = document.getElementById("finish")
+const contentResults = document.getElementById("results")
+
 let currentQuestionIndex
-let questionslist
+let questionsList
 
-function results(key, element) {
-	let arrayResults = JSON.parse(localStorage.getItem(key)) || []
-	arrayResults.push(element)
-	localStorage.setItem("ejerciciocarlotaarnold", JSON.stringify(arrayResults))
-	console.log(arrayResults)
+let date = new Date()
+let horas = date.getHours()
+let minutos = date.getMinutes()
+let dia = date.getDay()
+let mes = date.getMonth()
+let aNos = date.getFullYear()
+let date_hours = dia + "/" + mes + "/" + aNos + " a las: " + horas + ":" + minutos
 
-	const datatitle = arrayResults.map((item) => item.date_hours)
-	console.log(datatitle)
-	/* let date_hours = new Date()
-	localStorage.setItem(date_hours, JSON.stringify(counter))
-	arrayResults.push(date_hours) */
+let counter = 0
 
-	/* contentresults.innerHTML += `<p>${LOCALSTORAGE}</p>` */
+function seeresults() {
+	contentResults.classList.remove("hide")
+	contentResults.innerHTML = ""
+	let resultArray = JSON.parse(localStorage.getItem("results")) || []
+	for (let i = 0; i < resultArray.length; i++) {
+		contentResults.innerHTML += `
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+			${resultArray[i].date_hours}
+				<span class="badge text-bg-primary rounded-pill">${resultArray[i].counter}</span>
+			</li>
+			`
+	}
+	var options = {
+		chart: {
+			type: "bar",
+		},
+		series: [
+			{
+				name: "sales",
+				data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
+			},
+		],
+		xaxis: {
+			categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+		},
+	}
+	var chart = new ApexCharts(document.querySelector("#chart"), options)
+	chart.render()
 }
-/* 
-arrayResults.forEach((data) => {
-	results(data)
-}) */
+
+function resetQuiz() {
+	startButton.classList.remove("hide")
+	nextButton.classList.add("hide")
+	finishButton.classList.add("hide")
+	restartButton.classList.add("hide")
+	cardGroup.classList.remove("hide")
+	currentQuestionIndex = 0
+	questions.classList.add("hide")
+	answers.classList.add("hide")
+	seeresults()
+}
+
+function saveDataLocalstorage() {
+	const data = {date_hours, counter}
+
+	let resultArray = JSON.parse(localStorage.getItem("results")) || []
+	resultArray.push(data)
+
+	localStorage.setItem("results", JSON.stringify(resultArray))
+}
 
 axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`)
 	.then((res) => {
-		questionslist = res.data.results
+		questionsList = res.data.results
 
 		// questionslist.push(res.data.results)
-		return questionslist
+		return questionsList
 		//questionslist.results son las preguntas y respuestas en un array de lengt 10
 	})
 	.catch((err) => console.log(err))
 
 function start() {
-	buttonstart.classList.add("hide")
-	buttonnext.classList.remove("hide")
+	startButton.classList.add("hide")
+	nextButton.classList.remove("hide")
+	finishButton.classList.add("hide")
+	/* contentResults.classList.add("hide") */
+	restartButton.classList.add("hide")
+	cardGroup.classList.add("hide")
 	currentQuestionIndex = 0
+	/* 	counter = 0 */
 	questions.classList.remove("hide")
 	answers.classList.remove("hide")
 	setNextQuestion()
@@ -89,7 +140,7 @@ function showquestions(item) {
 
 function setNextQuestion() {
 	reset()
-	showquestions(questionslist[currentQuestionIndex])
+	showquestions(questionsList[currentQuestionIndex])
 }
 
 function setstatus(element) {
@@ -106,12 +157,15 @@ function selectresp() {
 	Array.from(answers.children).forEach((button) => {
 		setstatus(button)
 	})
-	if (questionslist.length > currentQuestionIndex + 1) {
-		buttonnext.classList.remove("hide")
+	if (questionsList.length > currentQuestionIndex + 1) {
+		nextButton.classList.remove("hide")
 	} else {
 		// LLAMAR A FUNCION DE LOCALSTORAGE
-		buttonstart.classList.remove("hide")
-		buttonstart.innerText = "Restart"
+		finishButton.classList.remove("hide")
+		finishButton.addEventListener("click", resetQuiz)
+		restartButton.classList.remove("hide")
+
+		saveDataLocalstorage()
 		return (counter = 0)
 	}
 }
@@ -122,17 +176,16 @@ next.addEventListener("click", () => {
 })
 
 function reset() {
-	buttonnext.classList.add("hide")
+	nextButton.classList.add("hide")
 	while (answers.firstChild) {
 		answers.removeChild(answers.firstChild)
 	}
 }
-let counter = 0
+
 function savecorrectanswers() {
 	counter = counter + 1
-
-	return counter
 }
 
-buttonnext.addEventListener("click", setNextQuestion)
-buttonstart.addEventListener("click", start)
+nextButton.addEventListener("click", setNextQuestion)
+startButton.addEventListener("click", start)
+restartButton.addEventListener("click", start)

@@ -7,19 +7,68 @@
 		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 		<link rel="stylesheet" href="./style.css" />
-		<!-- <script src="main.js" defer></script> -->
-		<script src="arnoldmain.js" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
+		<script src="main.js" defer></script>
+		<!-- <script src="arnoldmain.js" defer></script> -->
 		<!-- <script src="carlotamain.js" defer></script> -->
 	</head>
-	<body>
+	<body onload="seeresults()">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img src="./assets/img/logo.svg" alt="Bootstrap" width="100" class="logo" />
+				</a>
+				<!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="./crearUsuario.html">Formulario</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="./listadoUsuario.html">Lista usuarios</a>
+						</li>
+					</ul>
+				</div> -->
+			</div>
+		</nav>
+
 		<div class="container col-10">
-			<div id="Resultados"></div>
+			<div class="row" id="card-group">
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Special title treatment</h5>
+							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<button class="btn btn-primary me-md-2" type="button" id="start">Start</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Check your score</h5>
+
+							<div class="card-text">
+								<ul>
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										Fecha
+										<span class="badge text-bg-primary rounded-pill">Scores</span>
+									</li>
+								</ul>
+								<ul id="results"></ul>
+							</div>
+							<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+						</div>
+					</div>
+				</div>
+			</div>
 			<h1 class="mb-4 hide" id="questions">Preguntas</h1>
 			<div class="hide d-grid gap-2 mb-4" id="answers"></div>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button class="btn btn-primary me-md-2" type="button" id="start">Start</button>
+				<button class="btn btn-primary me-md-2 hide" type="button" id="finish">Show results</button>
+				<button class="btn btn-primary hide" type="button" id="restart">Restart</button>
 				<button class="btn btn-primary hide" type="button" id="next">Next</button>
 			</div>
 		</div>
+		<div id="chart"></div>
 	</body>
 </html>
