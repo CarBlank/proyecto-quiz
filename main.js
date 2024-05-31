@@ -50,7 +50,6 @@ function seeresults() {
 		arraydates.push(n.date_hours)
 	})
 	chart.render()
-
 	for (let i = 0; i < resultArray.length; i++) {
 		contentResults.innerHTML += `
 			<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -59,7 +58,7 @@ function seeresults() {
 			</li>
 			`
 	}
-	printresulth1.innerText = ``
+	printresulth1.innerText = ""
 
 	chartresults.classList.remove("hide")
 }
@@ -73,7 +72,9 @@ function resetQuiz() {
 	currentQuestionIndex = 0
 	questions.classList.add("hide")
 	answers.classList.add("hide")
-
+	chartresults.innerHTML = ""
+	arraydata.length = 0
+	arraydates.length = 0
 	seeresults()
 }
 
