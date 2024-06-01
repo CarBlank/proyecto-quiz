@@ -8,6 +8,7 @@ const restartButton = document.getElementById("restart")
 const nextButton = document.getElementById("next")
 const finishButton = document.getElementById("finish")
 const contentResults = document.getElementById("results")
+const scoreCard = document.querySelector(".printscore")
 const printresulth1 = document.getElementById("print")
 const chartresults = document.getElementById("chart")
 
@@ -15,12 +16,12 @@ let currentQuestionIndex
 let questionsList
 
 let date = new Date()
-let horas = date.getHours()
-let minutos = date.getMinutes()
-let dia = date.getDay()
-let mes = date.getMonth()
-let aNos = date.getFullYear()
-let date_hours = dia + "/" + mes + "/" + aNos + " - " + horas + ":" + minutos
+let hours = date.getHours()
+let minutes = date.getMinutes()
+let day = date.getDay()
+let month = date.getMonth()
+let year = date.getFullYear()
+let date_hours = day + "/" + month + "/" + year + " - " + hours + ":" + minutes
 let arraydata = []
 let arraydates = []
 let counter = 0
@@ -39,7 +40,7 @@ var options = {
 	},
 }
 
-function seeresults() {
+function showResults() {
 	contentResults.classList.remove("hide")
 	contentResults.innerHTML = ""
 
@@ -69,13 +70,14 @@ function resetQuiz() {
 	finishButton.classList.add("hide")
 	restartButton.classList.add("hide")
 	cardGroup.classList.remove("hide")
+	scoreCard.classList.add("hide")
 	currentQuestionIndex = 0
 	questions.classList.add("hide")
 	answers.classList.add("hide")
 	chartresults.innerHTML = ""
 	arraydata.length = 0
 	arraydates.length = 0
-	seeresults()
+	showResults()
 }
 
 function saveDataLocalstorage() {
@@ -101,7 +103,7 @@ function start() {
 	nextButton.classList.remove("hide")
 	finishButton.classList.add("hide")
 	chartresults.classList.add("hide")
-	/* contentResults.classList.add("hide") */
+	scoreCard.classList.add("hide")
 	restartButton.classList.add("hide")
 	cardGroup.classList.add("hide")
 	currentQuestionIndex = 0
@@ -148,7 +150,7 @@ function showquestions(item) {
 			button.addEventListener("click", savecorrectanswers)
 		}
 
-		button.addEventListener("click", selectresp)
+		button.addEventListener("click", selectAnswer)
 		answers.appendChild(button)
 	})
 }
@@ -158,7 +160,7 @@ function setNextQuestion() {
 	showquestions(questionsList[currentQuestionIndex])
 }
 
-function setstatus(element) {
+function setStatus(element) {
 	if (element.dataset.correct) {
 		element.classList.add("color-correct")
 		element.classList.add("disable")
@@ -168,21 +170,30 @@ function setstatus(element) {
 	}
 }
 
-function selectresp() {
+function selectAnswer() {
 	Array.from(answers.children).forEach((button) => {
-		setstatus(button)
+		setStatus(button)
 	})
 	if (questionsList.length > currentQuestionIndex + 1) {
 		nextButton.classList.remove("hide")
 	} else {
-		finishButton.classList.remove("hide")
-		finishButton.addEventListener("click", resetQuiz)
-		restartButton.classList.remove("hide")
-		printresult(counter)
-		// LLAMAR A FUNCION DE LOCALSTORAGE
-		saveDataLocalstorage()
-		return (counter = 0)
+		setTimeout(function () {
+			printScore()
+		}, 3000)
 	}
+}
+
+function printScore() {
+	answers.classList.add("hide")
+	questions.classList.add("hide")
+	scoreCard.classList.remove("hide")
+	restartButton.classList.remove("hide")
+	finishButton.classList.remove("hide")
+	finishButton.addEventListener("click", resetQuiz)
+
+	printresult(counter)
+	saveDataLocalstorage()
+	return (counter = 0)
 }
 
 next.addEventListener("click", () => {
@@ -202,8 +213,8 @@ function savecorrectanswers() {
 	counter = counter + 1
 }
 
-function printresult(resultado) {
-	printresulth1.innerText = `Your score is ${resultado}/10!`
+function printresult(resultchart) {
+	printresulth1.innerText = `Your score is ${resultchart}/10!`
 }
 
 var chart = new ApexCharts(document.querySelector("#chart"), options)

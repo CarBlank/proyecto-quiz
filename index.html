@@ -5,58 +5,70 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-		<link rel="stylesheet" href="./style.css" />
 		<script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
 		<script src="main.js" defer></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+		<link rel="stylesheet" href="./style.css" />
 	</head>
-	<body onload="seeresults()">
+	<body onload="showResults()">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="README.md">
-					<img src="./assets/img/logo.svg" alt="Bootstrap" width="100" class="logo" />
+					<img src="./assets/img/logo.svg" alt="Bootstrap" width="180" class="logo" />
 				</a>
 			</div>
 		</nav>
-
 		<div class="container col-10">
 			<div class="row" id="card-group">
-				<div class="col-sm-6 mb-3 mb-sm-0">
+				<div class="col-sm-12 mb-3 mb-sm-0">
 					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">Welcome to the Quiz!!</h5>
-							<p class="card-text">Let see what you know...</p>
-							<button class="btn btn-primary me-md-2" type="button" id="start">Start</button>
+						<div class="d-flex justify-content-between align-items-center card-body card-start">
+							<div class="card-welcome">
+								<h5 class="card-title">Welcome to the Quiz!</h5>
+								<p class="card-text">Let see what you know... Are your ready?</p>
+								<button class="btn btn-primary me-md-2" type="button" id="start">Start quiz</button>
+							</div>
+							<div class="startimg">
+								<img src="./assets/img/startimg.png" alt="" width="180px" />
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-12 mt-4">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">Check your score</h5>
-
-							<div class="card-text">
-								<ul>
-									<li class="list-group-item d-flex justify-content-between align-items-center">
-										Dates
-										<span class="badge text-bg-primary rounded-pill">Scores</span>
-									</li>
-								</ul>
-								<ul id="results"></ul>
+							<h5 class="card-title mb-3">Check your score</h5>
+							<div class="row card-text">
+								<div id="chart" class="col-sm-6"></div>
+								<div class="col-sm-5 me-2 score-list">
+									<ul class="list-group list-group-horizontal-xxl mb-1">
+										<li class="list-group-item d-flex justify-content-between align-items-center">
+											Dates
+											<span class="badge text-bg-secondary rounded-pill">Scores</span>
+										</li>
+									</ul>
+									<ul class="list-group list-group-horizontal-xxl overflow-auto shadow mb-2" id="results" style="max-height: 270px"></ul>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<h1 class="mb-4 hide" id="questions">Preguntas</h1>
+			<h1 class="mb-4 hide" id="questions">Questions</h1>
 			<div class="hide d-grid gap-2 mb-4" id="answers"></div>
+			<div class="printscore mb-4 hide">
+				<div class="d-flex justify-content-between align-items-center mt-4 p-4 score">
+					<h1 id="print"></h1>
+					<div class="scoreimg">
+						<img src="./assets/img/congratsimg.png" alt="Congrats img" width="180px" />
+					</div>
+				</div>
+			</div>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button class="btn btn-primary me-md-2 hide" type="button" id="finish">Show results</button>
 				<button class="btn btn-primary hide" type="button" id="restart">Restart</button>
+				<button class="btn btn-primary me-md-2 hide" type="button" id="finish">Check results</button>
 				<button class="btn btn-primary hide" type="button" id="next">Next</button>
 			</div>
 		</div>
-		<div class="d-flex justify-content-center mt-4" style="color: white"><h1 id="print"></h1></div>
-		<div id="chart"></div>
 	</body>
 </html>

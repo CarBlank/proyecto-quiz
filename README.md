@@ -12,7 +12,7 @@ Para el desarrollo del la web se ha tenido en cuenta que sea una SPA (Single-Pag
 
 ## Visuales
 
-![imagen de ejemplo del quiz](./assets/image.png)
+![imagen de ejemplo del quiz](./assets/cap1.png) ![imagen de ejemplo de las preguntas](./assets/cap2.png) ![imagen de ejemplo de la puntuación](./assets/cap3.png)
 
 ## Empezando 🚀
 
