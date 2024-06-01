@@ -4,7 +4,11 @@ Proyecto para clases en TheBridge sobre un QUIZ!
 
 ## Descripción
 
-El proyecto consta de una pagina web con un quiz de 10 preguntas, donde podras ver los resultados obtenidos, y volver a realizar el Quiz cuantas veces quieras, y luego podras comparar tus resultados. El tema de las preguntas, es "conocimiento general".
+El proyecto consiste en desarrollar una página web con un quiz de 10 preguntas, donde podrás ver los resultados obtenidos, y volver a realizar el quiz cuantas veces quieras. Cada pregunta tiene 4 opciones, de las cuales solo una se marcará en verde que será la correcta. También podrás comparar los resultados obtenidos.
+
+El tema de las preguntas, es "conocimiento general" y estas obtienen de la API "opentdb" (https://opentdb.com/).
+
+Para el desarrollo del la web se ha tenido en cuenta que sea una SPA (Single-Page Application), sin recarga.
 
 ## Visuales
 
